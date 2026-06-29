@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中美AI产业链人才情报中心 (L1-L7全景)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <style>
+        body { font-family: 'Inter', 'PingFang SC', sans-serif; background-color: #f1f5f9; }
+        .chart-container { height: 380px; width: 100%; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; color: white; margin-right: 4px;}
+        .tag-recruit { background-color: #3b82f6; }
+        .tag-finance { background-color: #10b981; }
+        .tag-media { background-color: #f59e0b; }
+        .tag-conf { background-color: #8b5cf6; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <nav class="bg-slate-900 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl font-bold">🛰️ 中美AI产业链人才情报中心</div>
+            <div class="space-x-4 text-sm hidden md:block">
+                <a href="#overview" class="hover:text-cyan-400">L1-L7 全景</a>
+                <a href="#comparison" class="hover:text-cyan-400">中美对比 (L1-L3)</a>
+                <a href="#company" class="hover:text-cyan-400">头部公司穿透</a>
+                <a href="#weekly" class="hover:text-cyan-400">情报周报</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4 md:p-6">
+        
+        <!-- 1. L1-L7 全景雷达 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6" id="overview">
+            <h2 class="text-xl font-bold mb-2">📊 产业链全景需求温度计 (L1-L7)</h2>
+            <p class="text-sm text-slate-500 mb-4">基于多源信息综合评估的本周人才扩张指数 (0-100，越高代表扩招/缺口越严重)</p>
+            <div id="chart-radar" class="chart-container"></div>
+        </div>
+
+        <!-- 2. 中美核心岗位对比 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" id="comparison">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-semibold mb-4">🇨🇳🇺🇸 L2芯片架构师薪资与门槛对比</h3>
+                <div id="chart-salary-cmp" class="chart-container"></div>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-lg font-semibold mb-4">🇨🇳🇺🇸 L3底层软件(CUDA/编译器)供需对比</h3>
+                <div id="chart-supply-cmp" class="chart-container"></div>
+            </div>
+        </div>
+
+        <!-- 3. L1-L3 头部公司具体动向穿透 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6 overflow-x-auto" id="company">
+            <h2 class="text-xl font-bold mb-4">🎯 L1-L3 头部公司人才动向追踪表</h2>
+            <table class="w-full text-sm text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-100 text-slate-600">
+                        <th class="p-3 border">公司</th>
+                        <th class="p-3 border">产业链层</th>
+                        <th class="p-3 border">本周核心动作</th>
+                        <th class="p-3 border">关键人才画像</th>
+                        <th class="p-3 border">信息源</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 border font-bold text-red-600">寒武纪</td>
+                        <td class="p-3 border">L2 (设计)</td>
+                        <td class="p-3 border">Q3财报后宣布扩招，重点增加AI芯片系统级验证与底层软件适配团队。</td>
+                        <td class="p-3 border">5-8年UVM验证经验，或懂PyTorch图编译器优化</td>
+                        <td class="p-3 border"><span class="tag tag-finance">Q3财报</span> <span class="tag tag-recruit">招聘网</span></td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 border font-bold text-green-600">NVIDIA</td>
+                        <td class="p-3 border">L2 (设计)</td>
+                        <td class="p-3 border">GTC大会发布Blackwell架构，全球紧急招募异构计算系统架构师。</td>
+                        <td class="p-3 border">PhD，精通NVLink/InfiniBand，有大型超算集群部署经验</td>
+                        <td class="p-3 border"><span class="tag tag-conf">GTC会议</span> <span class="tag tag-media">科技媒体</span></td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 border font-bold text-blue-600">海光信息</td>
+                        <td class="p-3 border">L2/L3 (软硬)</td>
+                        <td class="p-3 border">DCU配套软件栈升级，需大量CUDA to HIP移植工程师及编译器后端开发。</td>
+                        <td class="p-3 border">C++精通，熟悉LLVM/MLIR，有AMD ROCm背景优先</td>
+                        <td class="p-3 border"><span class="tag tag-recruit">招聘网</span> <span class="tag tag-media">行业报告</span></td>
+                    </tr>
+                    <!-- 新增投喂素材 -->
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 border font-bold text-purple-600">OpenAI</td>
+                        <td class="p-3 border">L6 (模型)</td>
+                        <td class="p-3 border">算力成本压力下，大幅扩招推理优化工程师，重点压缩模型部署显存。</td>
+                        <td class="p-3 border">精通C++/CUDA，有vLLM/TensorRT贡献者优先</td>
+                        <td class="p-3 border"><span class="tag tag-media">科技媒体</span> <span class="tag tag-recruit">领英</span></td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 border font-bold text-orange-600">华为海思</td>
+                        <td class="p-3 border">L2/L3 (算力)</td>
+                        <td class="p-3 border">昇腾CANN生态全面升级，急聘编译器后端开发与AI框架适配专家。</td>
+                        <td class="p-3 border">熟悉LLVM/MLIR，懂底层硬件微架构</td>
+                        <td class="p-3 border"><span class="tag tag-finance">年报披露</span> <span class="tag tag-recruit">招聘网</span></td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 border font-bold text-pink-600">智元机器人</td>
+                        <td class="p-3 border">L7 (应用)</td>
+                        <td class="p-3 border">具身智能量产在即，批量招募机器人控制算法与端侧推理部署工程师。</td>
+                        <td class="p-3 border">AI+自动化双背景，熟悉ROS2与强化学习</td>
+                        <td class="p-3 border"><span class="tag tag-media">行业会议</span> <span class="tag tag-recruit">官网</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 4. 情报周报区 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6" id="weekly">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">📰 本周人才情报周报</h2>
+                <select class="border rounded p-1 text-sm">
+                    <option>2026年第10周 (首期发布)</option>
+                </select>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3">
+                <!-- 新增投喂素材 -->
+                <div>
+                    <h4 class="font-bold text-red-600">一、 L1-L3 重点动向 (硬件/算力/底层软件)</h4>
+                    <p class="text-sm text-slate-700 mt-1">
+                        <strong>【L2 芯片设计】</strong>美国侧，NVIDIA在GTC大会发布Blackwell架构后，紧急启动全球招募异构计算系统架构师，侧重NVLink/CXL互联经验，顶校博士年薪包突破$60万。<span class="tag tag-conf">[行业会议]</span> <span class="tag tag-recruit">[招聘网]</span><br>
+                        <strong>【L2/L3 软硬协同】</strong>中国侧，寒武纪2025年财报显示首次扭亏，研发投入结构优化，本周在BOSS直聘集中释放数十个“AI芯片系统级验证”与“底层软件适配”岗位。海光信息同步招募大量CUDA to HIP移植工程师。<span class="tag tag-finance">[上市公司年报]</span> <span class="tag tag-recruit">[招聘网]</span><br>
+                        <strong>【L3 算力集群】</strong>受出口管制影响，国内大模型公司转向国产算力（昇腾/海光），极度缺乏能同时懂国产NPU架构与PyTorch图编译器优化的“软硬协同”人才，薪资溢价环比上升10%。<span class="tag tag-media">[高可信度媒体]</span>
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-blue-600">二、 L4-L7 宏观动态 (云/模型/应用层)</h4>
+                    <p class="text-sm text-slate-700 mt-1">
+                        <strong>【L6 前沿大模型】</strong>中美均呈现“算法收敛，工程扩张”趋势。OpenAI与Anthropic在算力受限下，重金招募推理优化工程师，KV Cache与算子融合成为高薪核心技能。<span class="tag tag-media">[科技媒体]</span> <span class="tag tag-finance">[公司披露]</span><br>
+                        <strong>【L7 终端应用】</strong>中国具身智能赛道爆发，宇树、智元等公司大量招募具身智能算法工程师，要求“深度学习+ROS机器人控制”双背景，复合型人才极度稀缺，年薪百万起步。<span class="tag tag-media">[行业报告]</span> <span class="tag tag-recruit">[招聘网]</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. 雷达图: L1-L7 温度计 (已更新最新数据)
+        const chartRadar = echarts.init(document.getElementById('chart-radar'));
+        chartRadar.setOption({
+            tooltip: { trigger: 'item' },
+            legend: { data: ['中国扩张指数', '美国扩张指数'], bottom: 0 },
+            radar: {
+                indicator: [
+                    { name: 'L1 原材料(光刻胶/硅片)', max: 100 },
+                    { name: 'L2 芯片设计', max: 100 },
+                    { name: 'L3 算力集群/软硬协同', max: 100 },
+                    { name: 'L4 数据中心/云底座', max: 100 },
+                    { name: 'L5 数据/训练框架', max: 100 },
+                    { name: 'L6 前沿大模型', max: 100 },
+                    { name: 'L7 终端应用', max: 100 }
+                ]
+            },
+            series: [{
+                type: 'radar',
+                data: [
+                    // 数据已更新: L2=90, L3=95, L7=95
+                    { value: [65, 90, 95, 78, 85, 92, 95], name: '中国扩张指数', areaStyle: { color: 'rgba(239, 68, 68, 0.4)' }, lineStyle: { color: '#ef4444' } },
+                    { value: [30, 70, 85, 90, 95, 100, 95], name: '美国扩张指数', areaStyle: { color: 'rgba(59, 130, 246, 0.4)' }, lineStyle: { color: '#3b82f6' } }
+                ]
+            }]
+        });
+
+        // 2. 薪资对比柱状图 (已更新美国架构师数据)
+        const chartSalaryCmp = echarts.init(document.getElementById('chart-salary-cmp'));
+        chartSalaryCmp.setOption({
+            tooltip: { trigger: 'axis' },
+            legend: { data: ['中国 (万RMB)', '美国 (万RMB等值)'], bottom: 0 },
+            xAxis: { type: 'category', data: ['入门级(1-3年)', '中坚层(3-8年)', '架构师(10年+)'] },
+            yAxis: { type: 'value', name: '年薪 (万RMB)' },
+            series: [
+                { name: '中国 (万RMB)', type: 'bar', data: [50, 120, 300], itemStyle: {color: '#ef4444'} },
+                // 数据已更新: 架构师从300调至350
+                { name: '美国 (万RMB等值)', type: 'bar', data: [120, 280, 350], itemStyle: {color: '#3b82f6'} }
+            ]
+        });
+
+        // 3. 供需对比图 (已更新中国本周缺口指数)
+        const chartSupplyCmp = echarts.init(document.getElementById('chart-supply-cmp'));
+        chartSupplyCmp.setOption({
+            tooltip: { trigger: 'axis' },
+            legend: { data: ['中国岗位缺口指数', '美国岗位缺口指数'], bottom: 0 },
+            xAxis: { type: 'category', boundaryGap: false, data: ['1月', '2月', '本周'] },
+            yAxis: { type: 'value' },
+            series: [
+                // 数据已更新: 本周缺口从88调至92
+                { name: '中国岗位缺口指数', type: 'line', data: [70, 75, 92], smooth: true, itemStyle: {color: '#ef4444'} },
+                { name: '美国岗位缺口指数', type: 'line', data: [80, 85, 82], smooth: true, itemStyle: {color: '#3b82f6'} }
+            ]
+        });
+
+        // 响应式
+        window.addEventListener('resize', function() {
+            chartRadar.resize();
+            chartSalaryCmp.resize();
+            chartSupplyCmp.resize();
+        });
+    </script>
+</body>
+</html>
